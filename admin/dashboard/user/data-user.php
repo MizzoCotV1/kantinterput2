@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+// Check if the user is logged in and has admin privileges
+    if ($_SESSION['hak_akses'] !== 'admin') {
+    // Redirect to a login page or display an error message
+    header("Location: /kantinterput2/admin/dashboard/");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

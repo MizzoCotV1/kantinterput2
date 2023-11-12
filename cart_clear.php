@@ -7,5 +7,5 @@ if (isset($_SESSION['cart'])) {
 }
 
 // Redirect back to the cart display page (cart.php)
-header('Location: cart.php');
+header('Location: /kantinterput2/cart.php');
 ?>

@@ -40,8 +40,6 @@ require_once("conn.php");
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="http://localhost/kantinterput2/admin/dashboard/settings.php">Settings</a></li>
-                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                         <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="logout.php">Logout</a></li>
                     </ul>
@@ -57,14 +55,6 @@ require_once("conn.php");
                             <a class="nav-link" href="http://localhost/kantinterput2/admin/dashboard/">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
-                            </a>
-                            <a class="nav-link" href="tables.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Tables
-                            </a>
-                            <a class="nav-link" href="charts.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                                Charts
                             </a>
                             <div class="sb-sidenav-menu-heading">Interface</div>
                             <a class="nav-link" href="http://localhost/kantinterput2/admin/dashboard/penjualan.php">
@@ -82,11 +72,11 @@ require_once("conn.php");
 
                             <?php if ($_SESSION['hak_akses'] == 'admin') : ?>
                                 <div class="sb-sidenav-menu-heading">Register</div>
-                                <a class="nav-link" href="http://localhost/kantinterput2/admin/dashboard/user/register.php">
+                                <a class="nav-link" href="/kantinterput2/admin/dashboard/user/register.php">
                                     <div class="sb-nav-link-icon"><i class="fa-solid fa-id-card"></i></div>
                                     Register user
                                 </a>
-                                <a class="nav-link" href="http://localhost/kantinterput2/admin/dashboard/user/data-user.php">
+                                <a class="nav-link" href="/kantinterput2/admin/dashboard/user/data-user.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                     Data User
                                 </a>

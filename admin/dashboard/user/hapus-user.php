@@ -1,4 +1,14 @@
 <?php
+session_start();
+
+// Check if the user is logged in and has admin privileges
+    if ($_SESSION['hak_akses'] !== 'admin') {
+    // Redirect to a login page or display an error message
+    header("Location: /kantinterput2/admin/dashboard/");
+    exit();
+}
+?>
+<?php
 require_once("../../../admin/dashboard/conn.php");
 $id = $_GET["id_user"];
 //mengambil id yang ingin dihapus

@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 ?>
 
 
@@ -12,7 +13,7 @@ session_start();
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ogani | Template</title>
+    <title>Cart</title>
     <?php include 'bs-cdn.php';?>
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
@@ -24,7 +25,7 @@ session_start();
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
 <?php include 'header.php';?>
     
     <!-- Shoping Cart Section Begin -->
@@ -34,31 +35,47 @@ session_start();
                 <div class="col-lg-12">
                     <div class="shoping__cart__table">
                         <?php
-                        if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
-                            echo '<table>';
-                            echo '<thead>';
-                            echo '<tr><th class="shoping__product">Products</th><th>Price</th><th>Quantity</th><th>Total</th><th></th></tr>';
-                            echo '</thead>';
-                            echo '<tbody>';
-                            foreach ($_SESSION['cart'] as $index => $item) {
-                                echo '<tr>';
-                                echo '<td class="shoping__cart__item"><img src="' . str_replace($_SERVER["DOCUMENT_ROOT"], "", $item["image"]) . '"width="60" height="60" class="d-none d-sm-inline"><h5>' . $item['product_name'] . '</h5></td>';
-                                echo '<td class="shoping__cart__price">Rp' . $item['price'] . '</td>';
-                                echo '<td class="shoping__cart__quantity">';
-                                echo '<a href="update_cart.php?action=decrease&index=' . $index . '">- </a>';
-                                echo $item['quantity'];
-                                echo '<a href="update_cart.php?action=increase&index=' . $index . '"> +</a>';
-                                echo '</td>';
-                                echo '<td class="shoping__cart__total">Rp' . ($item['price'] * $item['quantity']) . '</td>';
-                                echo '<p class="d-none">' . $item['id_product'] . '</p>';
-                                echo '<td class="shoping__cart__item__close"><a href="update_cart.php?action=remove&index=' . $index . '"><span class="icon_close"></span></a></td>';
-                                echo '</tr>';
+                            if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
+                                $messageBody = "Pesanan Anda:\n";
+                                $totalQuantity = 0;
+                                $totalPrice = 0;
+
+                                foreach ($_SESSION['cart'] as $items) {
+                                    $messageBody .= $items['quantity'] . "x " . $items['product_name'] . " - $" . $items['price'] . "\n";
+                                    $totalQuantity += $items['quantity'];
+                                    $totalPrice += $items['price'] * $items['quantity'];
+                                }
+
+                                // Include total quantity, total products, and total price in the message
+                                $messageBody .= "\nTotal Quantity: " . $totalQuantity . "\n";
+                                $messageBody .= "Total Produk: " . count($_SESSION['cart']) . "\n";
+                                $messageBody .= "Total Harga: $" . $totalPrice . "\n";
+                                $messageBody .= "Nama:\n";
+                                $messageBody .= "Kelas:\n";
+                                echo '<table>';
+                                echo '<thead>';
+                                echo '<tr><th class="shoping__product">Products</th><th>Price</th><th>Quantity</th><th>Total</th><th></th></tr>';
+                                echo '</thead>';
+                                echo '<tbody>';
+                                foreach ($_SESSION['cart'] as $index => $item) {
+                                    echo '<tr>';
+                                    echo '<td class="shoping__cart__item"><img src="' . str_replace($_SERVER["DOCUMENT_ROOT"], "", $item["image"]) . '"width="60" height="60" class="d-none d-sm-inline"><h5>' . $item['product_name'] . '</h5></td>';
+                                    echo '<td class="shoping__cart__price">Rp' . $item['price'] . '</td>';
+                                    echo '<td class="shoping__cart__quantity">';
+                                    echo '<a href="/kantinterput2/update_cart.php?action=decrease&index=' . $index . '">- </a>';
+                                    echo $item['quantity'];
+                                    echo '<a href="/kantinterput2/update_cart.php?action=increase&index=' . $index . '"> +</a>';
+                                    echo '</td>';
+                                    echo '<td class="shoping__cart__total">Rp' . ($item['price'] * $item['quantity']) . '</td>';
+                                    echo '<p class="d-none">' . $item['id_product'] . '</p>';
+                                    echo '<td class="shoping__cart__item__close"><a href="/kantinterput2/update_cart.php?action=remove&index=' . $index . '"><span class="icon_close"></span></a></td>';
+                                    echo '</tr>';
+                                }
+                                echo '</tbody>';
+                                echo '</table>';
+                            } else {
+                                echo '<h5>Your cart is empty.</h5>';
                             }
-                            echo '</tbody>';
-                            echo '</table>';
-                        } else {
-                            echo '<h5>Your cart is empty.</h5>';
-                        }
                         ?>
                         <?php
                         $totalPrice = 0; // Initialize the total price to zero
@@ -75,41 +92,34 @@ session_start();
             <div class="row">
                 <div class="col-lg-12">
                     <div class="shoping__cart__btns">
-                        <a href="#" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
-                        <a href="#" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
+                        <a href="/kantinterput2/" class="site-btn cart-btn">CONTINUE SHOPPING</a>
+                        <a href="/kantinterput2/cart.php" class="site-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
                             Upadate Cart</a>
                         <br>
-                        <a href="cart_clear.php" class="primary-btn cart-btn cart-btn-right my-2">CLEAR CART</a>
+                        <a href="/kantinterput2/cart_clear.php" class="primary-btn cart-btn cart-btn-right my-2">CLEAR CART</a>
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="shoping__continue">
-                        <div class="shoping__discount">
-                            <h5>Discount Codes</h5>
-                            <form action="#">
-                                <input type="text" placeholder="Enter your coupon code">
-                                <button type="submit" class="site-btn">CLEAR CART</button>
-                            </form>
-                        </div>
-                    </div>
                 </div>
                 
                 <div class="col-lg-6">
-                    <div class="shoping__checkout">
-                        <h5>Cart Total</h5>
-                        <ul>
-                            <li>Subtotal <span><?php
-                                if ($totalPrice === 0) {
-                                    echo '0';
-                                } else {
-                                    echo '<td class="shoping__cart__total">Rp' . $totalPrice . '</td>';
-                                }
-                                ?></span>
-                            </li>
-                            <li>Total <span>$454.98</span></li>
-                        </ul>
-                        <button href="#" class="site-btn">PROCEED TO CHECKOUT</button>
-                    </div>
+                    <form method="post" action="#" id="checkoutForm">
+                        <div class="shoping__checkout">
+                            <h5>Cart Total</h5>
+                            <ul>
+                                <li>Total <span>
+                                        <?php
+                                        if ($totalPrice === 0) {
+                                            echo '0';
+                                        } else {
+                                            echo '<td class="shoping__cart__total">Rp' . $totalPrice . '</td>';
+                                        }
+                                        ?></span>
+                                </li>
+                            </ul>
+                            <button type="button" onclick="redirectToWhatsApp()" class="site-btn">PROCEED TO CHECKOUT</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -117,71 +127,7 @@ session_start();
     <!-- Shoping Cart Section End -->
 
     <!-- Footer Section Begin -->
-    <footer class="footer spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="footer__about">
-                        <div class="footer__about__logo">
-                            <a href="./index.html"><img src="img/logo.png" alt=""></a>
-                        </div>
-                        <ul>
-                            <li>Address: 60-49 Road 11378 New York</li>
-                            <li>Phone: +65 11.188.888</li>
-                            <li>Email: hello@colorlib.com</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
-                    <div class="footer__widget">
-                        <h6>Useful Links</h6>
-                        <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">About Our Shop</a></li>
-                            <li><a href="#">Secure Shopping</a></li>
-                            <li><a href="#">Delivery infomation</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Our Sitemap</a></li>
-                        </ul>
-                        <ul>
-                            <li><a href="#">Who We Are</a></li>
-                            <li><a href="#">Our Services</a></li>
-                            <li><a href="#">Projects</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Innovation</a></li>
-                            <li><a href="#">Testimonials</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="footer__widget">
-                        <h6>Join Our Newsletter Now</h6>
-                        <p>Get E-mail updates about our latest shop and special offers.</p>
-                        <form action="#">
-                            <input type="text" placeholder="Enter your mail">
-                            <button type="submit" class="site-btn">Subscribe</button>
-                        </form>
-                        <div class="footer__widget__social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="footer__copyright">
-                        <div class="footer__copyright__text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
-                        <div class="footer__copyright__payment"><img src="img/payment-item.png" alt=""></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+    
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->
@@ -193,7 +139,32 @@ session_start();
     <script src="js/mixitup.min.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+    <script>
+        function redirectToWhatsApp() {
+            // Add your WhatsApp number and message to the URL
+            var whatsappURL = 'https://wa.me/6285157171344?text=<?php echo urlencode($messageBody); ?>';
 
+            // Open a new window or tab with the WhatsApp chat link
+            var whatsappWindow = window.open(whatsappURL, '_blank');
+
+            // Make an AJAX request to notify the server that the message is sent
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "cart_clear.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.send();
+
+            // Destroy the session after a short delay (adjust the delay as needed)
+            setTimeout(function() {
+                // Close the WhatsApp window if it's still open
+                if (whatsappWindow && !whatsappWindow.closed) {
+                    whatsappWindow.close();
+                }
+
+                // Redirect to the "thank_you.php" page
+                window.location.href = 'thank_you.php';
+            }, 1000); // 1000 milliseconds (1 second) delay
+        }
+    </script>
 
 </body>
 

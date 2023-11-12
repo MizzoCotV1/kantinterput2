@@ -1,0 +1,10 @@
+a {
+    text-decoration: none; /* Remove the underline */
+    color: initial; /* Reset the text color to the default */
+    transition: color 0.2s; /* Smooth color transition */
+}
+
+a:hover {
+    color: #00AA5B !important; /* Change the text color to blue on hover (using !important to override other styles) */
+	
+}

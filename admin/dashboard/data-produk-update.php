@@ -41,100 +41,60 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="accordion-body px-5 my-2">
                                 <?php
                                     require_once("conn.php");
-                                    $id_gambar = uniqid() . mt_rand();
-                                            if(isset($_POST['daftar'])){
-                                                $nama_produk = filter_input(INPUT_POST, 'nama_produk');
-                                                $kategori = filter_input(INPUT_POST, 'kategori');
-                                                $harga = filter_input(INPUT_POST, 'harga');
-                                                $tgl_input = date("Y-m-d");
-                                                $user_input = $_SESSION['nama'];
-                                                $id_user = $_SESSION['id_user'];
+                                    if (isset($_POST['daftar'])) {
 
-                                                if (empty($kategori) || $kategori === "") {
-                                                    $error = "Please select a category.";
-                                                } 
-                                                if (empty($nama_produk) || empty($harga))  {
-                                                    echo "<script>formkosong();</script>";
-                                                    $error ="Error";
-                                                }
+                                        $nama_produk = filter_input(INPUT_POST, 'nama_produk');
+                                        $kategori = $_POST["kategori"];
+                                        $id_produk = $_POST["id_produk"];
+                                        $tgl_update = date("Y-m-d");
+                                        $user_update = $_SESSION['nama'];
 
-                                                if(!isset($error)){
-                                                    $uploadedFile = $_FILES["gambar"];
+                                        // Gunakan prepared statement untuk mencegah SQL injection
+                                        if (empty($_POST["kategori"])) {
+                                            $error = "Form kosong";
+                                        }
+                                        if(!isset($error)){
+                                            //no error
+                                                        //Securly insert into database
+                                            $sql = 'UPDATE produk SET id_produk=:id_produk, nama_produk=:nama_produk, kategori=:kategori, tgl_update=:tgl_update, user_update=:user_update WHERE id_produk=:id_produk';
+                                            $stmt = $conn->prepare($sql);
 
-                                                    if ($uploadedFile["error"] === UPLOAD_ERR_OK) {
-                                                        $gambarNama = $uploadedFile["name"];
-                                                        $gambarPath = $_SERVER['DOCUMENT_ROOT'] . "/image/" . $gambarNama;
+                                            $stmt->bindParam(':nama_produk', $nama_produk);
+                                            $stmt->bindParam(':id_produk', $id_produk);
+                                            $stmt->bindParam(':kategori', $kategori);
+                                            $stmt->bindParam(':tgl_update', $tgl_update);
+                                            $stmt->bindParam(':user_update', $user_update);
+                                                
+                                            $stmt->execute();
+                                            echo "<script>document.location.href='http://localhost/kantinterput2/admin/dashboard/data-produk.php';</script>";
+                                        }
+                                    }
 
-                                                        if (move_uploaded_file($uploadedFile["tmp_name"], $gambarPath)) {
-                                                            try {
-                                                                $sql1 = 'INSERT INTO Gambar (id_gambar, GambarNama, GambarPath) VALUES (?, ?, ?)';
-                                                                $stmt1 = $conn->prepare($sql1);
-                                                                $stmt1->execute([$id_gambar, $gambarNama, $gambarPath]);
+                                    // Gunakan prepared statement untuk mencegah SQL injection
+                                    $id_produk = $_GET['id_produk'];
+                                    $stmt = $conn->prepare("SELECT * FROM produk WHERE id_produk = :id_produk");
+                                    $stmt->bindParam(':id_produk', $id_produk);
+                                    $stmt->execute();
+                                    $edit = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                                                                echo "Gambar berhasil diunggah dan disimpan di basis data.";
-                                                            } catch (PDOException $e) {
-                                                                echo "Koneksi atau operasi basis data gagal: " . $e->getMessage();
-                                                            }
-                                                        } else {
-                                                            echo "Gagal mengunggah gambar ke server.";
-                                                        }
-                                                    } else {
-                                                        echo "Terjadi kesalahan saat mengunggah gambar.";
-                                                    }
-                                                    $sql = 'INSERT INTO produk (nama_produk, kategori, id_gambar, tgl_input, user_input, id_user) 
-                                                    VALUES (:nama_produk, :kategori, :id_gambar, :tgl_input, :user_input, :id_user)';
-                                                                $query1 = $conn->prepare($sql);
-
-                                                                $query1->bindParam(':nama_produk', $nama_produk);
-                                                                $query1->bindParam(':kategori', $kategori);
-                                                                $query1->bindParam(':id_gambar', $id_gambar);
-                                                                $query1->bindParam(':tgl_input', $tgl_input);
-                                                                $query1->bindParam(':user_input', $user_input);
-                                                                $query1->bindParam(':id_user', $id_user);
-
-                                                                if ($query1->execute()) {
-                                                                    // Step 2: Retrieve the auto-increment value
-                                                                    $autoIncrementValue = $conn->lastInsertId();
-                                                            
-                                                                    // Step 3: Insert a record into table2 using the retrieved auto-increment value
-                                                                    $query2 = "INSERT INTO jual (id_produk, id_gambar) VALUES (:auto_increment, :id_gambar)";
-                                                                    $stmt2 = $conn->prepare($query2);
-                                                            
-                                                                    // Bind parameters for the second query
-                                                                    $stmt2->bindParam(':auto_increment', $autoIncrementValue);
-                                                                    $stmt2->bindParam(':id_gambar', $id_gambar);
-                                                            
-                                                                    $stmt2->execute();
-                                                                }
-                                                    }
-                                            }
-
-                                            ?>
+                                    $currentCategory = $edit['kategori'];
+                                ?>
                                 <form action="" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" name="id_produk" value="<?= $edit['id_produk'] ?>">
                                     <div class="row">
                                         <div class="form-floating mb-3">
-                                            <input type="text" name="nama_produk" class="form-control" id="nama_produk"
+                                            <input type="text" name="nama_produk" class="form-control" id="nama_produk" value="<?= $edit['nama_produk'] ?>"
                                                 placeholder="Nama Produk">
                                             <label class="mx-2" for="nama_produk">Nama Produk</label>
                                         </div>
-                                        <div class="form-floating mb-3">
-                                            <input type="number" name="harga" class="form-control" id="harga"
-                                                placeholder="Harga">
-                                            <label class="mx-2" for="harga">Harga</label>
-                                        </div>
                                         <div class="">
-                                            <select name="kategori" class="form-select mb-3"
-                                                aria-label=".form-select-lg example">
+                                            <select name="kategori" class="form-select mb-3" aria-label=".form-select-lg example">
                                                 <option selected hidden disabled value="">Pilih Kategori Produk</option>
-                                                <option value="Gorengan">Gorengan</option>
-                                                <option value="Minuman">Minuman</option>
-                                                <option value="Mie">Mie</option>
-                                                <option value="Snack">Snack</option>
+                                                <option value="Gorengan" <?= ($currentCategory == 'Gorengan') ? 'selected' : ''; ?>>Gorengan</option>
+                                                <option value="Minuman" <?= ($currentCategory == 'Minuman') ? 'selected' : ''; ?>>Minuman</option>
+                                                <option value="Mie" <?= ($currentCategory == 'Mie') ? 'selected' : ''; ?>>Mie</option>
+                                                <option value="Snack" <?= ($currentCategory == 'Snack') ? 'selected' : ''; ?>>Snack</option>
                                             </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="formFile" class="form-label">Input Gambar PNG, JPEG, JPG</label>
-                                            <input class="form-control" type="file" id="formFile" name="gambar" accept=".png, .jpeg, .jpg">
                                         </div>
                                         <div class="col-6">
                                             <input class="btn btn-primary btn-block w-100" type="submit" name="daftar"

@@ -14,22 +14,18 @@
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-center fs-5 flex-grow-1 pe-3">
           <li class="nav-item mx-2">
-            <a class="nav-link active " aria-current="page" href="http://localhost/kantinterput2/">Home</a>
+            <a class="nav-link active " aria-current="page" href="/kantinterput2/">Home</a>
           </li>
           <li class="nav-item mx-2">
-            <a class="nav-link active " aria-current="page" href="cart.php">Keranjang</a>
+            <a class="nav-link active " aria-current="page" href="/kantinterput2/cart.php">Keranjang</a>
           </li>
           <li class="nav-item mx-2">
-            <a class="nav-link active " aria-current="page" href="#contact">Contact</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link mx-2 " href="#">Link</a>
+            <a class="nav-link active " aria-current="page" href="/kantinterput2/contact.php">Contact</a>
           </li>
         </ul>
         <!-- login/logout -->
         <div class="d-flex justify-content-center align-items-center gap-3">
-          <a href="admin/login.php" class="text-white px-3 py-1 rounded-3 btn"  style="background-color:#008000" >Login</a>
-          <a href="#sign up" class="text-white text-decoration-none- px-3 py-1 rounded-3 btn" style="background-color: #008000">Sign Up</a>
+          <a href="/kantinterput2/admin/login.php" class="text-white px-3 py-1 rounded-3 btn"  style="background-color:#008000" >Login</a>
         </div>
        
       </div>

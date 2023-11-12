@@ -32,51 +32,33 @@
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
                         <div class="container mb-3">
+                        
                             <div class="row text-center">
-                                <div class="col">
-                                    <p class=""><i class="fa-solid fa-user"></i> RPL<br><strong class="h3">1</strong></p>
+                            <?php
+                                require_once("conn.php");
 
-                                </div>
-                                <div class="col border-start">
-                                    <p class=""><i class="fa-solid fa-user"></i> DKV<br><strong class="h3">1</strong></p>
+                                $query = "
+                                    SELECT
+                                        kategori,
+                                        COUNT(id_produk) AS jumlah_produk
+                                    FROM
+                                        produk
+                                    GROUP BY
+                                        kategori;
+                                ";
 
-                                </div>
-                                <div class="col border-start">
-                                    <p class=""><i class="fa-solid fa-user"></i> AK<br><strong class="h3">0</strong></p>
+                                $stmt = $conn->query($query);
 
-                                </div>
-                                <div class="col border-start">
-                                    <p class=""><i class="fa-solid fa-user"></i> MP<br><strong class="h3">0</strong></p>
+                                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                    $kategori = $row['kategori'];
+                                    $jumlahProduk = $row['jumlah_produk'];
 
-                                </div>
-                                <div class="col border-start">
-                                    <p class=""><i class="fa-solid fa-user"></i> BDP<br><strong class="h3">0</strong></p>
-
-                                </div>
-                                <div class="col border-start">
-                                    <p class=""><i class="fa-solid fa-user"></i> PKM<br><strong class="h3">0</strong></p>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-area me-1"></i>
-                                        Area Chart Example
-                                    </div>
-                                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-bar me-1"></i>
-                                        Bar Chart Example
-                                    </div>
-                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-                                </div>
+                                    // Output or use the values as needed
+                                    echo '<div class="col border-start">';
+                                    echo '<p class=""><i class="fa-solid fa-user"></i> ' . $kategori . '<br><strong class="h3">' . $jumlahProduk . '</strong></p>';
+                                    echo '</div>';
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
