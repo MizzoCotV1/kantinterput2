@@ -127,10 +127,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             <select name="kategori" class="form-select mb-3"
                                                 aria-label=".form-select-lg example">
                                                 <option selected hidden disabled value="">Pilih Kategori Produk</option>
-                                                <option value="Gorengan">Gorengan</option>
+                                                <option value="Gorengan">Makanan</option>
                                                 <option value="Minuman">Minuman</option>
-                                                <option value="Mie">Mie</option>
-                                                <option value="Snack">Snack</option>
                                             </select>
                                         </div>
                                         <div class="mb-3">

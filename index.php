@@ -161,10 +161,8 @@
                             // Define the category names and the corresponding URLs
                             $categories = [
                                 'All' => 'index.php',
-                                'Mie' => 'index.php?kategori=Mie',
-                                'Gorengan' => 'index.php?kategori=Gorengan',
                                 'Minuman' => 'index.php?kategori=Minuman',
-                                'Snack' => 'index.php?kategori=Snack',
+                                'Makanan' => 'index.php?kategori=Makanan',
                             ];
 
                             $kategori = isset($_GET['kategori']) ? $_GET['kategori'] : 'All'; // Define $kategori with a default value
