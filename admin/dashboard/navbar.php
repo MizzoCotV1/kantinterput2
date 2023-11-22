@@ -1,11 +1,17 @@
+
 <?php
+if ($_SERVER['SERVER_NAME'] == 'localhost') {
+    $base_url = "http://localhost/kantinterput2/";
+} else {
+    $base_url = "https://your-production-domain.com/";
+}
 session_start();
 if (!isset($_SESSION['login'])) {
 require_once("conn.php");
 ?>
     <script>
         alert("SILAHKAN LOGIN!");
-        window.open('http://localhost/kantinterput2/admin/login.php', '_self');
+        window.open("<?php echo $base_url; ?>admin/login.php', '_self");
     </script>
 <?php
 } else {
@@ -19,13 +25,13 @@ require_once("conn.php");
 <?php
     if ($_SESSION['hak_akses'] !== 'admin') {
         echo "<script>
-            document.location.href='http://localhost/kantinterput2/admin/dashboard/';
+            document.location.href='" . $base_url . "admin/dashboard/';
         </script>";
     }
 ?>
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="http://localhost/kantinterput2/admin/dashboard/">Start Bootstrap</a>
+            <a class="navbar-brand ps-3" href="<?php echo $base_url; ?>admin/dashboard/">Start Bootstrap</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -52,31 +58,31 @@ require_once("conn.php");
                     <div class="sb-sidenav-menu">
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">General</div>
-                            <a class="nav-link" href="http://localhost/kantinterput2/admin/dashboard/">
+                            <a class="nav-link" href="<?php echo $base_url; ?>admin/dashboard/">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
                             <div class="sb-sidenav-menu-heading">Interface</div>
-                            <a class="nav-link" href="http://localhost/kantinterput2/admin/dashboard/penjualan.php">
+                            <a class="nav-link" href="<?php echo $base_url; ?>admin/dashboard/penjualan.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Penjualan
                             </a>
-                            <a class="nav-link" href="http://localhost/kantinterput2/admin/dashboard/data-produk.php">
+                            <a class="nav-link" href="<?php echo $base_url; ?>admin/dashboard/data-produk.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                     Data Produk
                             </a>
-                            <a class="nav-link" href="http://localhost/kantinterput2/admin/dashboard/pendaftaran-produk.php">
+                            <a class="nav-link" href="<?php echo $base_url; ?>admin/dashboard/pendaftaran-produk.php">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-id-card"></i></div>
                                     Daftar Produk
                             </a>
 
                             <?php if ($_SESSION['hak_akses'] == 'admin') : ?>
                                 <div class="sb-sidenav-menu-heading">Register</div>
-                                <a class="nav-link" href="/kantinterput2/admin/dashboard/user/register.php">
+                                <a class="nav-link" href="<?php echo $base_url; ?>admin/dashboard/user/register.php">
                                     <div class="sb-nav-link-icon"><i class="fa-solid fa-id-card"></i></div>
                                     Register user
                                 </a>
-                                <a class="nav-link" href="/kantinterput2/admin/dashboard/user/data-user.php">
+                                <a class="nav-link" href="<?php echo $base_url; ?>admin/dashboard/user/data-user.php">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                                     Data User
                                 </a>

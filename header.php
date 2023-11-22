@@ -1,4 +1,10 @@
-
+<?php
+if ($_SERVER['SERVER_NAME'] == 'localhost') {
+  $base_url = "http://localhost/kantinterput2/";
+} else {
+  $base_url = "https://your-production-domain.com/";
+}
+?>
 <!-- <nav class="navbar navbar-expand-lg bg-body-success"> -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
   <div class="container">
@@ -14,18 +20,18 @@
       <div class="offcanvas-body">
         <ul class="navbar-nav justify-content-center fs-5 flex-grow-1 pe-3">
           <li class="nav-item mx-2">
-            <a class="nav-link active " aria-current="page" href="/kantinterput2/">Home</a>
+            <a class="nav-link active " aria-current="page" href="<?php echo $base_url; ?>">Home</a>
           </li>
           <li class="nav-item mx-2">
-            <a class="nav-link active " aria-current="page" href="/kantinterput2/cart.php">Keranjang</a>
+            <a class="nav-link active " aria-current="page" href="<?php echo $base_url; ?>cart.php">Keranjang</a>
           </li>
           <li class="nav-item mx-2">
-            <a class="nav-link active " aria-current="page" href="/kantinterput2/contact.php">Contact</a>
+            <a class="nav-link active " aria-current="page" href="<?php echo $base_url; ?>contact.php">Contact</a>
           </li>
         </ul>
         <!-- login/logout -->
         <div class="d-flex justify-content-center align-items-center gap-3">
-          <a href="/kantinterput2/admin/login.php" class="text-white px-3 py-1 rounded-3 btn"  style="background-color:#008000" >Login</a>
+          <a href="<?php echo $base_url; ?>admin/login.php" class="text-white px-3 py-1 rounded-3 btn"  style="background-color:#008000" >Login</a>
         </div>
        
       </div>

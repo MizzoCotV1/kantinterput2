@@ -1,4 +1,9 @@
 <?php
+if ($_SERVER['SERVER_NAME'] == 'localhost') {
+    $base_url = "http://localhost/kantinterput2/";
+} else {
+    $base_url = "https://your-production-domain.com/";
+}
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
 }
@@ -66,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             $stmt->bindParam(':user_update', $user_update);
                                                 
                                             $stmt->execute();
-                                            echo "<script>document.location.href='http://localhost/kantinterput2/admin/dashboard/data-produk.php';</script>";
+                                            echo "<script>document.location.href='" . $base_url . "admin/dashboard/data-produk.php';</script>";
                                         }
                                     }
 

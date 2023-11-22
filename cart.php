@@ -1,6 +1,10 @@
 <?php
 session_start();
-
+if ($_SERVER['SERVER_NAME'] == 'localhost') {
+    $base_url = "http://localhost/kantinterput2/";
+} else {
+    $base_url = "https://your-production-domain.com/";
+}
 ?>
 
 
@@ -62,13 +66,13 @@ session_start();
                                     echo '<td class="shoping__cart__item"><img src="' . str_replace($_SERVER["DOCUMENT_ROOT"], "", $item["image"]) . '"width="60" height="60" class="d-none d-sm-inline"><h5>' . $item['product_name'] . '</h5></td>';
                                     echo '<td class="shoping__cart__price">Rp' . $item['price'] . '</td>';
                                     echo '<td class="shoping__cart__quantity">';
-                                    echo '<a href="/kantinterput2/update_cart.php?action=decrease&index=' . $index . '">- </a>';
+                                    echo '<a href="' . $base_url . 'update_cart.php?action=decrease&index=' . $index . '">- </a>';
                                     echo $item['quantity'];
-                                    echo '<a href="/kantinterput2/update_cart.php?action=increase&index=' . $index . '"> +</a>';
+                                    echo '<a href="' . $base_url . 'update_cart.php?action=increase&index=' . $index . '"> +</a>';
                                     echo '</td>';
                                     echo '<td class="shoping__cart__total">Rp' . ($item['price'] * $item['quantity']) . '</td>';
                                     echo '<p class="d-none">' . $item['id_product'] . '</p>';
-                                    echo '<td class="shoping__cart__item__close"><a href="/kantinterput2/update_cart.php?action=remove&index=' . $index . '"><span class="icon_close"></span></a></td>';
+                                    echo '<td class="shoping__cart__item__close"><a href="' . $base_url . 'update_cart.php?action=remove&index=' . $index . '"><span class="icon_close"></span></a></td>';
                                     echo '</tr>';
                                 }
                                 echo '</tbody>';
@@ -92,11 +96,11 @@ session_start();
             <div class="row">
                 <div class="col-lg-12">
                     <div class="shoping__cart__btns">
-                        <a href="/kantinterput2/" class="site-btn cart-btn">CONTINUE SHOPPING</a>
-                        <a href="/kantinterput2/cart.php" class="site-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
+                        <a href="<?php echo $base_url; ?>" class="site-btn cart-btn">CONTINUE SHOPPING</a>
+                        <a href="<?php echo $base_url; ?>" class="site-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
                             Upadate Cart</a>
                         <br>
-                        <a href="/kantinterput2/cart_clear.php" class="primary-btn cart-btn cart-btn-right my-2">CLEAR CART</a>
+                        <a href="<?php echo $base_url; ?>cart_clear.php" class="primary-btn cart-btn cart-btn-right my-2">CLEAR CART</a>
                     </div>
                 </div>
                 <div class="col-lg-6">

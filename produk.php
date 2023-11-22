@@ -1,4 +1,9 @@
 <?php
+if ($_SERVER['SERVER_NAME'] == 'localhost') {
+    $base_url = "http://localhost/kantinterput2/";
+} else {
+    $base_url = "https://your-production-domain.com/";
+}
 // Suppress PHP errors and save the current error reporting level
 $previousErrorReporting = error_reporting(0);
 
@@ -96,7 +101,7 @@ error_reporting($previousErrorReporting);
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="product__details__text">
-                        <form action="/kantinterput2/add_to_cart.php" method="POST" id="productForm">
+                        <form action="<?php echo $base_url; ?>add_to_cart.php" method="POST" id="productForm">
                             <input type="hidden" name="topping" id="selectedToppingInput" value="<?php echo $topping; ?>">
                             <input type="hidden" id="displayedPrice" name="price" value="<?php echo $harga; ?>">
                             <input type="hidden" name="id_product" value="<?php echo $id_jual; ?>">

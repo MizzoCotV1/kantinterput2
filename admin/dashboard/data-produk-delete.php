@@ -1,4 +1,9 @@
 <?php
+if ($_SERVER['SERVER_NAME'] == 'localhost') {
+    $base_url = "http://localhost/kantinterput2/";
+} else {
+    $base_url = "https://your-production-domain.com/";
+}
 require_once("conn.php");
 
 $id_produk = $_GET["id_produk"]; // Get the id_produk you want to delete
@@ -30,7 +35,7 @@ try {
     $stmt2->execute();
 
     // Delete the associated image file
-    $image_directory = 'C:/xampp/htdocs/image/'; // Update this path
+    $image_directory = $_SERVER['DOCUMENT_ROOT'] . "/kantinterput2/image/"; // Update this path
     $image_path = $image_directory . $image_filename;
     
     if (file_exists($image_path)) {

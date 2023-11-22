@@ -1,4 +1,9 @@
 <?php
+if ($_SERVER['SERVER_NAME'] == 'localhost') {
+    $base_url = "http://localhost/kantinterput2/";
+} else {
+    $base_url = "https://your-production-domain.com/";
+}
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
 }
@@ -24,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="container-fluid px-4">
                 <h1 class="mt-4">Form Pendaftaran</h1>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="http://localhost/kantinterput2/admin/dashboard/">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="<?php echo $base_url; ?>admin/dashboard/">Dashboard</a></li>
                     <li class="breadcrumb-item active">Pendaftaran</li>
                 </ol>
                 <div class="accordion" id="accordionPanelsStayOpenExample">
@@ -62,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                                     if ($uploadedFile["error"] === UPLOAD_ERR_OK) {
                                                         $gambarNama = $uploadedFile["name"];
-                                                        $gambarPath = $_SERVER['DOCUMENT_ROOT'] . "/image/" . $gambarNama;
+                                                        $gambarPath = $_SERVER['DOCUMENT_ROOT'] . "/kantinterput2/image/" . $gambarNama;
 
                                                         if (move_uploaded_file($uploadedFile["tmp_name"], $gambarPath)) {
                                                             try {
